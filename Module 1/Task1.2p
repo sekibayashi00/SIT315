@@ -1,0 +1,42 @@
+// C++ code
+//
+
+volatile bool ismotionDetected = false;
+
+void setup(){
+  pinMode(2, INPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+  
+  //attach interrupt
+attachInterrupt(digitalPinToInterrupt(2), motionISR, CHANGE);
+
+}
+
+void loop(){
+  
+  bool curMotionDetected = ismotionDetected;
+  
+  if (curMotionDetected) { 
+    digitalWrite(3, HIGH);
+    digitalWrite(4, LOW);
+    Serial.println("Motion detected!: GREEN LED IS ON:  RED OFF!"); 
+  
+
+  } else { //if there is no motion detected, RED LED is turned on and GREEN OFF
+    digitalWrite(3, LOW);
+    digitalWrite(4, HIGH);
+    Serial.println("Motion not detected!: RED LED IS ON: GREEN OFF!");
+  }
+  delay(100); // Delay to improve serial reading 
+}
+
+
+void motionISR() {
+  ismotionDetected = digitalRead(2);
+  
+  
+  
+}
