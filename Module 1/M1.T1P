@@ -1,0 +1,29 @@
+// C++ code
+//
+int sensorState = 0;
+
+void setup()
+{
+  pinMode(2, INPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  // read the state of the sensor/digital input
+  sensorState = digitalRead(2);
+  // check if sensor pin is HIGH. if it is, set green on and red led off
+  if (sensorState == HIGH) {
+    digitalWrite(3, HIGH);
+    digitalWrite(4, LOW);
+    Serial.println("Motion detected!: GREEN LED IS ON:  RED OFF!");
+  } else { //check if sensor pin is LOW. IF so RED LED is turned on and GREEN OFF
+    digitalWrite(3, LOW);
+    digitalWrite(4, HIGH);
+    Serial.println("Motion not detected!: RED LED IS ON: GREEN OFF!");
+  }
+  delay(10); // Delay to improve serial reading 
+}
